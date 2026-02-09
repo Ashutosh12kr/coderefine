@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeRefine - AI Code Review</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="w-full p-6 flex justify-between items-center glass-header sticky top-0 z-50">
+        <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-blue-500 to-purple-600"></div>
+            <h1 class="text-2xl font-bold tracking-tight">CodeRefine</h1>
+        </div>
+        <nav class="hidden md:flex gap-6 text-gray-300">
+            <a href="#" class="hover:text-white transition">Features</a>
+            <a href="#" class="hover:text-white transition">Pricing</a>
+            <a href="#" class="hover:text-white transition">About</a>
+        </nav>
+        <button class="bg-blue-600 hover:bg-blue-500 text-white px-5 py-2 rounded-full font-medium transition shadow-lg shadow-blue-500/30">
+            Get Started
+        </button>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow container mx-auto px-4 py-8 flex flex-col md:flex-row gap-8">
+        
+        <!-- Input Section -->
+        <section class="flex-1 flex flex-col gap-4 animate-fade-in-up">
+            <div class="glass-panel p-6 rounded-2xl h-full flex flex-col">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-semibold text-gray-200">Input Code</h2>
+                    <select id="languageSelect" class="bg-gray-800 border border-gray-700 text-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2">
+                        <option value="python">Python</option>
+                        <option value="javascript">JavaScript</option>
+                        <option value="java">Java</option>
+                        <option value="cpp">C++</option>
+                    </select>
+                </div>
+                <textarea id="codeInput" class="w-full flex-grow bg-gray-950/50 text-gray-300 font-mono text-sm p-4 rounded-xl border border-gray-800 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none resize-none transition" placeholder="// Paste your code here..." spellcheck="false"></textarea>
+                
+                <div class="mt-4 flex gap-3">
+                    <button id="analyzeBtn" class="flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white py-3 rounded-xl font-semibold shadow-lg shadow-blue-500/20 transition transform hover:-translate-y-0.5 active:translate-y-0">
+                        Analyze Code
+                    </button>
+                    <select id="analysisType" class="bg-gray-800 border border-gray-700 text-white py-3 px-4 rounded-xl outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="review">Code Review</option>
+                        <option value="bugfix">Find Bugs</option>
+                        <option value="optimize">Optimize</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+
+        <!-- Output Section -->
+        <section class="flex-1 flex flex-col gap-4 animate-fade-in-up" style="animation-delay: 0.1s;">
+            <div class="glass-panel p-6 rounded-2xl h-full flex flex-col relative overflow-hidden">
+                <h2 class="text-xl font-semibold text-gray-200 mb-4">Analysis Result</h2>
+                
+                <!-- Loading State -->
+                <div id="loadingIndicator" class="hidden absolute inset-0 bg-gray-900/80 backdrop-blur-sm z-10 flex flex-col items-center justify-center">
+                    <div class="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mb-4"></div>
+                    <p class="text-gray-300 animate-pulse">Analyzing logic...</p>
+                </div>
+
+                <!-- Empty State -->
+                <div id="emptyState" class="flex-grow flex flex-col items-center justify-center text-gray-500 text-center p-8">
+                    <svg class="w-16 h-16 mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                    <p>Run an analysis to see insights here.</p>
+                </div>
+
+                <!-- Results Content -->
+                <div id="resultsContent" class="hidden flex-col gap-6 h-full overflow-y-auto pr-2 custom-scrollbar">
+                    
+                    <!-- Issues List -->
+                    <div id="issuesContainer" class="space-y-3">
+                        <!-- Issues injected here -->
+                    </div>
+
+                    <!-- Optimized Code -->
+                    <div class="mt-2">
+                         <h3 class="text-sm uppercase tracking-wider text-gray-400 font-semibold mb-2">Optimized Code</h3>
+                         <pre class="bg-gray-950 p-4 rounded-xl border border-gray-800 overflow-x-auto"><code id="optimizedCode" class="text-sm font-mono text-green-400"></code></pre>
+                    </div>
+
+                    <!-- Explanation -->
+                    <div class="bg-blue-900/20 border border-blue-500/30 p-4 rounded-xl">
+                        <h3 class="text-blue-300 font-semibold mb-1">Explanation</h3>
+                        <p id="explanationText" class="text-gray-300 text-sm leading-relaxed"></p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center py-6 text-gray-500 text-sm">
+        &copy; 2024 CodeRefine AI. All rights reserved.
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
